@@ -112,6 +112,25 @@ describe 'date input' do
         end
         output_buffer.should have_tag("form li ol li select#post_created_at_1i option[@selected]", :count => 1)
         output_buffer.should have_tag("form li ol li select#post_created_at_1i option[@value='#{Time.now.year}'][@selected]", :count => 1)
+
+        
+      end
+
+
+      it "should select Time.zone.now if a :selected is not provided" do
+        @zone_now = 2.days.ago
+        @zone = mock('timezone')
+        @zone.stub!(:now).and_return(@zone_now)
+        Time.stub!(:zone).and_return(@zone)
+      
+        output_buffer.replace ''
+        @new_post.stub!(:created_at => nil)
+        semantic_form_for(@new_post) do |builder|
+          concat(builder.input(:created_at, :as => :date))
+        end
+        output_buffer.should have_tag("form li ol li select#post_created_at_1i option[@selected]", :count => 1)
+        output_buffer.should have_tag("form li ol li select#post_created_at_1i option[@value='#{@zone_now.year}'][@selected]", :count => 1)
+        output_buffer.should have_tag("form li ol li select#post_created_at_3i option[@value='#{@zone_now.day}'][@selected]", :count => 1)
         
       end
     end

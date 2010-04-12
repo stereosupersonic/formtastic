@@ -994,7 +994,7 @@ module Formtastic #:nodoc:
         list_items_capture = ""
         hidden_fields_capture = ""
 
-        datetime = options.key?(:selected) ? options[:selected] : Time.now # can't do an || because nil is an important value
+        datetime = options.key?(:selected) ? options[:selected] :default_time# can't do an || because nil is an important value
         datetime = @object.send(method) if @object && @object.send(method) # object trumps :selected
 
         html_options = options.delete(:input_html) || {}
@@ -1493,6 +1493,10 @@ module Formtastic #:nodoc:
       #
       def column_for(method) #:nodoc:
         @object.column_for_attribute(method) if @object.respond_to?(:column_for_attribute)
+      end
+
+      def default_time
+        Time.zone ? Time.zone.now : Time.now
       end
 
       # Generates default_string_options by retrieving column information from
