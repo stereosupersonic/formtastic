@@ -1,4 +1,4 @@
-h1. Formtastic
+h1. Formtastic gem
 
 Formtastic is a Rails FormBuilder DSL (with some other goodies) to make it far easier to create beautiful, semantically rich, syntactically awesome, readily stylable and wonderfully accessible HTML forms in your Rails applications.
 
